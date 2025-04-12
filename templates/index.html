@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Image Generator</title>
+    <title>Free AI Image Generator</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,6 +14,10 @@
         h1 {
             text-align: center;
             color: #333;
+        }
+        h3 {
+            text-align: center;
+            color: green;
         }
         form {
             max-width: 600px;
@@ -24,7 +29,7 @@
         }
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-top: 10px;
             font-weight: bold;
         }
         input[type="text"], input[type="number"] {
@@ -89,6 +94,39 @@
         .image-info p {
             margin: 5px 0;
         }
+
+        .github-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px;
+            background: #24292e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .github-btn:hover {
+            background: #1a1a1a;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 120px;
+            height: auto;
+            margin: 0 auto 15px;
+        }
     </style>
     <script>
         function enableDownload() {
@@ -100,7 +138,21 @@
     </script>
 </head>
 <body>
-    <h1>AI Image Generator</h1>
+    <div class="logo-container">
+        <img src="/static/logo.png" alt="AI Generator Logo" class="logo">
+        <h1>Free AI Image Generator</h1>
+    </div>
+
+    <!-- New GitHub section added -->
+    <div class="footer">
+        <a href="https://github.com/hobrt/Free-AI-Image-Generator" 
+           target="_blank" 
+           class="github-btn">
+            View on GitHub
+        </a>
+    </div>
+    <h3>you need to change the seed to get new image for the same prompt</h3>
+
 
     {% if error %}
         <p class="error">{{ error }}</p>
@@ -146,5 +198,6 @@
             </div>
         </div>
     {% endif %}
+
 </body>
 </html>
