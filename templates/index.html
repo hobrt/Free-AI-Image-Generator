@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background: #45a049;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .image-container {
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .download-btn {
+            margin: 20px auto;
+            display: block;
+            padding: 12px 24px;
+            background: #e0e0e0;
+            color: #666;
+            border: none;
+            border-radius: 4px;
+            cursor: not-allowed;
+            transition: all 0.3s;
+        }
+        .download-btn.active {
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .image-info {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+            text-align: left;
+        }
+        .image-info p {
+            margin: 5px 0;
+        }
+    </style>
+    <script>
+        function enableDownload() {
+            const btn = document.getElementById('downloadBtn');
+            btn.disabled = false;
+            btn.classList.add('active');
+            btn.style.cursor = 'pointer';
+        }
+    </script>
+</head>
+<body>
+    <h1>AI Image Generator</h1>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <label>Prompt:</label>
+        <input type="text" name="prompt" value="beautiful landscape" required>
+
+        <label>Width:</label>
+        <input type="number" name="width" min="1" value="1024" required>
+
+        <label>Height:</label>
+        <input type="number" name="height" min="1" value="1024" required>
+
+        <label>Seed:</label>
+        <input type="number" name="Seed" min="1" value="22" required>
+
+        <button type="submit">Generate Image</button>
+    </form>
+
+    {% if image_url %}
+        <div class="image-container">
+            <button 
+                id="downloadBtn"
+                type="button"
+                disabled
+                onclick="window.location.href='/download?url={{ image_url | urlencode }}'"
+                class="download-btn"
+            >
+                Download Image
+            </button>
+            <img 
+                src="{{ image_url }}" 
+                alt="AI Generated Image" 
+                onload="enableDownload()"
+            >
+            <div class="image-info">
+                <p><strong>Prompt:</strong> {{ prompt }}</p>
+                <p><strong>Width:</strong> {{ width }} px</p>
+                <p><strong>Height:</strong> {{ height }} px</p>
+                <p><strong>Seed:</strong> {{ Seed }}</p>
+            </div>
+        </div>
+    {% endif %}
+</body>
+</html>
